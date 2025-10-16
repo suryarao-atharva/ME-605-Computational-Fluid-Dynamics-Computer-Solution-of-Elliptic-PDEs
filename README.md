@@ -1,3 +1,68 @@
-🌡️ 2D Steady-State Heat Conduction Solver (Elliptic PDEs)This repository contains the computer program and analysis for solving the two-dimensional steady-state heat conduction equation ($\nabla^2T=0$) on a rectangular domain using the Finite Difference Method (FDM).The primary goal of this project is to compare the performance, convergence characteristics, and computational efficiency of four different numerical solution techniques for elliptic Partial Differential Equations (PDEs) across various grid resolutions.🚀 Project OverviewThe governing equation solved is the 2D Laplace equation on an $80 \text{mm} \times 80 \text{mm}$ square domain.Boundary Conditions:Bottom ($y=0$): Dirichlet boundary condition, $T = 323 \text{ K}$.Top ($y=80 \text{ mm}$): Dirichlet boundary condition, $T = 423 \text{ K}$.Right ($x=80 \text{ mm}$): Dirichlet boundary condition, $T = 473 \text{ K}$.Left (x=0): Mixed (Neumann/Convective) boundary condition:$$h(T_{\infty}-T(x=0,y))=-\lambda\frac{\partial T}{\partial x}\bigg|_{x=0}$$$\lambda = 5 \text{ W/(m·K)}$ (Thermal conductivity)$h = 250 \text{ W/(m}^2\text{·K)}$ (Convective heat transfer coefficient)$T_{\infty} = 573 \text{ K}$ (Free stream temperature)Grid Resolutions:The system is solved for three uniform mesh sizes:Coarse: $11 \times 11$ grid pointsMedium: $21 \times 21$ grid pointsFine: $41 \times 41$ grid points🔢 Implemented Solution MethodsThe repository implements and compares custom-written solvers for the discretized algebraic equations. No built-in or intrinsic library functions were used for solving linear systems.Direct Method: Gaussian EliminationAnalyzed for CPU run time scaling vs. the total number of grid points.Point-Wise Iterative Method: Gauss-SeidelAnalyzed for convergence rate (Residual vs. Iterations) and CPU run time scaling.Line-by-Line Iterative Method: Tri-Diagonal Matrix Algorithm (TDMA)The TDMA is used within an iterative loop (row sweep).Analyzed for convergence rate and CPU run time scaling, focusing on comparison with Gauss-Seidel.Time-Marching Scheme: Alternating Direction Implicit (ADI)The TDMA is utilized for the implicit steps (row and column sweeps).Analyzed for convergence rate for a $21 \times 41$ grid and comparison with other iterative methods.🛠️ Usage and ExecutionPrerequisites[Specify any required runtime, e.g., Python 3.8+][Specify any required libraries, e.g., NumPy, Matplotlib for plotting]Running the CodeClone the repository:git clone [repository-url]
-cd [repository-name]
-[Provide a specific command to execute the main script, e.g., python main_solver.py]The script will automatically perform the simulations for all specified grid sizes and solution methods, and generate the required plots for analysis.OutputThe program generates:Contour Plots: For the temperature field ($T$) on the finest grid for each method.Performance Plots:CPU Run Time vs. Total Grid Points (for all methods).Residual vs. Number of Iterations (for iterative methods).📈 Key Findings and DiscussionA summary of the project's key conclusions regarding the performance and convergence trade-offs between direct, point-wise, line-by-line, and ADI methods will be included in the final project report.
+# 🌡️ 2D Steady-State Heat Conduction Solver (Elliptic PDEs)
+
+This repository contains the computer program and analysis for solving the **two-dimensional steady-state heat conduction equation** ($\nabla^2 T = 0$) on a rectangular domain using the **Finite Difference Method (FDM)**.  
+
+The primary goal of this project is to **compare the performance, convergence characteristics, and computational efficiency** of four different numerical solution techniques for elliptic Partial Differential Equations (PDEs) across various grid resolutions.
+
+---
+
+## 🚀 Project Overview
+
+### Governing Equation
+The governing equation solved is the **2D Laplace equation** on an $80 \, \text{mm} \times 80 \, \text{mm}$ square domain:
+
+$\nabla^2 T = \dfrac{\partial^2 T}{\partial x^2} + \dfrac{\partial^2 T}{\partial y^2} = 0$
+
+
+### Boundary Conditions
+
+- **Bottom ($y=0$):** Dirichlet BC → $T = 323 \, \text{K}$  
+- **Top ($y=80 \, \text{mm}$):** Dirichlet BC → $T = 423 \, \text{K}$  
+- **Right ($x=80 \, \text{mm}$):** Dirichlet BC → $T = 473 \, \text{K}$  
+- **Left ($x=0$):** Mixed (Neumann/Convective) BC:
+
+$$
+h(T_{\infty} - T(x=0,y)) = -\lambda \frac{\partial T}{\partial x}\bigg|_{x=0}
+$$
+
+where:
+
+| Symbol | Parameter | Value |
+|:-------:|:-----------|:------|
+| $\lambda$ | Thermal conductivity | $5 \, \text{W/(m·K)}$ |
+| $h$ | Convective heat transfer coefficient | $250 \, \text{W/(m}^2\text{·K)}$ |
+| $T_{\infty}$ | Free-stream temperature | $573 \, \text{K}$ |
+
+---
+
+## 🧩 Grid Resolutions
+
+The system is solved for **three uniform mesh sizes**:
+
+| Grid Type | Grid Size |
+|:-----------|:-----------|
+| Coarse | $11 \times 11$ |
+| Medium | $21 \times 21$ |
+| Fine | $41 \times 41$ |
+
+---
+
+## 🔢 Implemented Solution Methods
+
+This project implements and compares **custom-written solvers** for the discretized algebraic equations — no built-in linear system solvers are used.
+
+### 1. **Direct Method: Gaussian Elimination**
+- Analyzed for **CPU run time scaling** vs. total number of grid points.
+
+### 2. **Point-Wise Iterative Method: Gauss–Seidel**
+- Analyzed for **convergence rate** (Residual vs. Iterations).  
+- Analyzed for **CPU run time scaling**.
+
+### 3. **Line-by-Line Iterative Method: TDMA (Tri-Diagonal Matrix Algorithm)**
+- TDMA applied within an iterative **row-sweep** loop.  
+- Analyzed for **convergence rate** and **CPU run time scaling**, with a direct comparison to Gauss–Seidel.
+
+### 4. **Time-Marching Scheme: ADI (Alternating Direction Implicit)**
+- TDMA utilized for implicit steps (**row and column sweeps**).  
+- Analyzed for **convergence rate** on a $21 \times 41$ grid and compared with other iterative methods.
+
